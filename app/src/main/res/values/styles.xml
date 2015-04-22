@@ -18,6 +18,5 @@
         <item name="android:textColorSecondary">@color/primary_text</item>
 
 
-
     </style>
 </resources>
