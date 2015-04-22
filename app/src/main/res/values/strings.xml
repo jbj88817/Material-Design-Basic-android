@@ -13,4 +13,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_example">Example action</string>
+    <string name="next">Next</string>
+    <string name="title_activity_sub">SubActivity</string>
 </resources>

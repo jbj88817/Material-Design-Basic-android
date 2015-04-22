@@ -6,4 +6,9 @@
           android:title="@string/action_settings"
           android:orderInCategory="100"
           app:showAsAction="never"/>
+      <item android:id="@+id/navigate"
+            android:title="@string/next"
+          android:orderInCategory="200"
+            android:icon="@drawable/ic_chevron_right_black_48dp"
+          app:showAsAction="always"/>
 </menu>
