@@ -27,6 +27,8 @@ public class NavigationDrawerFragment extends Fragment {
 
     private boolean mUserLearnedDrawer;
     private boolean mFromSavedInstancestate;
+    private View containerView;
+    private boolean isDrawerOpened = false;
 
 
     public NavigationDrawerFragment() {
@@ -44,29 +46,47 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUserLearnedDrawer = Boolean.getBoolean(readPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, "false"));
-        if( savedInstanceState != null) {
-            mFromSavedInstancestate = false;
+        mUserLearnedDrawer = Boolean.valueOf(readPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, "false"));
+        if (savedInstanceState != null) {
+            mFromSavedInstancestate = true;
         }
     }
 
-    public void setUp(DrawerLayout drawerLayout, Toolbar toolbar) {
+    public void setUp(int fragmentId, DrawerLayout drawerLayout, Toolbar toolbar) {
+
+        containerView = getActivity().findViewById(fragmentId);
 
         mDrawerLayout = drawerLayout;
         mDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar,
-                R.string.drawer_open, R.string.drawer_close){
+                R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                if (!mUserLearnedDrawer) {
+                    mUserLearnedDrawer = true;
+                    saveToPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, mUserLearnedDrawer + "");
+                }
+                getActivity().invalidateOptionsMenu();
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
+                getActivity().invalidateOptionsMenu();
             }
         };
 
+        if (!mUserLearnedDrawer && !mFromSavedInstancestate) {
+            mDrawerLayout.openDrawer(containerView);
+        }
+
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mDrawerToggle.syncState();
+            }
+        });
 
     }
 
@@ -77,9 +97,9 @@ public class NavigationDrawerFragment extends Fragment {
         editor.apply();
     }
 
-    public static String readPreferences(Context context, String preferenceName, String preferenceValue) {
+    public static String readPreferences(Context context, String preferenceName, String defaultValue) {
         SharedPreferences preferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
-        return preferences.getString(preferenceName, preferenceValue);
+        return preferences.getString(preferenceName, defaultValue);
     }
 
 }
