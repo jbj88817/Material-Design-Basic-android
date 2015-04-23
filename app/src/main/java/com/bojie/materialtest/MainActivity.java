@@ -19,9 +19,10 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         mToolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        drawerFragment.setUp((DrawerLayout)findViewById(R.id.drawer_layout), mToolbar);
+        drawerFragment.setUp((DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
     }
 
     @Override

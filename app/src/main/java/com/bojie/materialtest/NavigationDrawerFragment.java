@@ -1,6 +1,8 @@
 package com.bojie.materialtest;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -16,8 +18,15 @@ import android.view.ViewGroup;
  */
 public class NavigationDrawerFragment extends Fragment {
 
+    public static final String PREF_FILE_NAME = "testpref";
+
+    public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
+
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
+
+    private boolean mUserLearnedDrawer;
+    private boolean mFromSavedInstancestate;
 
 
     public NavigationDrawerFragment() {
@@ -32,6 +41,14 @@ public class NavigationDrawerFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mUserLearnedDrawer = Boolean.getBoolean(readPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, "false"));
+        if( savedInstanceState != null) {
+            mFromSavedInstancestate = false;
+        }
+    }
 
     public void setUp(DrawerLayout drawerLayout, Toolbar toolbar) {
 
@@ -53,5 +70,16 @@ public class NavigationDrawerFragment extends Fragment {
 
     }
 
+    public static void saveToPreferences(Context context, String preferenceName, String preferenceValue) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(preferenceName, preferenceValue);
+        editor.apply();
+    }
+
+    public static String readPreferences(Context context, String preferenceName, String preferenceValue) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        return preferences.getString(preferenceName, preferenceValue);
+    }
 
 }
