@@ -52,7 +52,5 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
             tv_title = (TextView) itemView.findViewById(R.id.listText);
             iv_icon = (ImageView) itemView.findViewById(R.id.listIcon);
         }
-
-
     }
 }
