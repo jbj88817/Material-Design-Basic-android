@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,11 +19,14 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
 
     private LayoutInflater inflater;
     List<Information> data = Collections.emptyList();
+    private Context mContext;
 
     public RecycleAdapter(Context context, List<Information> data) {
         inflater = LayoutInflater.from(context);
         this.data = data;
+        mContext = context;
     }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = inflater.inflate(R.layout.custom_row, viewGroup, false);
@@ -43,7 +47,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
         return data.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView iv_icon;
         TextView tv_title;
 
@@ -51,6 +55,19 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
             super(itemView);
             tv_title = (TextView) itemView.findViewById(R.id.listText);
             iv_icon = (ImageView) itemView.findViewById(R.id.listIcon);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(mContext, "Item clicked at " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+            delete(getAdapterPosition()
+            );
+        }
+    }
+
+    public void delete(int postion) {
+        data.remove(postion);
+        notifyItemRemoved(postion);
     }
 }
