@@ -60,8 +60,8 @@ public class NavigationDrawerFragment extends Fragment {
         String[] titles = {"Bojie", "Ziyang", "Kyle", "Larry"};
         for (int i = 0; i < titles.length && i < icons.length; i++) {
             Information current = new Information();
-            current.iconId = icons[i];
-            current.title = titles[i];
+            current.iconId = icons[i % icons.length];
+            current.title = titles[i % titles.length];
             data.add(current);
         }
         return data;
