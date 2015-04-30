@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +19,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
     private LayoutInflater inflater;
     List<Information> data = Collections.emptyList();
     private Context mContext;
+    private ClickListener mClickListener;
 
     public RecycleAdapter(Context context, List<Information> data) {
         inflater = LayoutInflater.from(context);
@@ -41,6 +41,10 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
         myViewHolder.iv_icon.setImageResource(current.iconId);
     }
 
+    public void setClickListener(ClickListener clickListener){
+        mClickListener = clickListener;
+    }
+
 
     @Override
     public int getItemCount() {
@@ -60,14 +64,19 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(mContext, "Item clicked at " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
-            delete(getAdapterPosition()
-            );
+            //mContext.startActivity(new Intent(mContext, SubActivity.class));
+            if (mClickListener != null) {
+                mClickListener.itemClicked(v, getAdapterPosition());
+            }
         }
     }
 
     public void delete(int postion) {
         data.remove(postion);
         notifyItemRemoved(postion);
+    }
+
+    public interface ClickListener{
+        public void itemClicked(View view, int position);
     }
 }
