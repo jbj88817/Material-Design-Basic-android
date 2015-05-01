@@ -19,7 +19,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
     private LayoutInflater inflater;
     List<Information> data = Collections.emptyList();
     private Context mContext;
-    private ClickListener mClickListener;
 
     public RecycleAdapter(Context context, List<Information> data) {
         inflater = LayoutInflater.from(context);
@@ -41,11 +40,6 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
         myViewHolder.iv_icon.setImageResource(current.iconId);
     }
 
-    public void setClickListener(ClickListener clickListener){
-        mClickListener = clickListener;
-    }
-
-
     @Override
     public int getItemCount() {
         return data.size();
@@ -64,10 +58,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
 
         @Override
         public void onClick(View v) {
-            //mContext.startActivity(new Intent(mContext, SubActivity.class));
-            if (mClickListener != null) {
-                mClickListener.itemClicked(v, getAdapterPosition());
-            }
+
         }
     }
 
@@ -76,7 +67,4 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
         notifyItemRemoved(postion);
     }
 
-    public interface ClickListener{
-        public void itemClicked(View view, int position);
-    }
 }
