@@ -1,6 +1,7 @@
 package com.bojie.materialtest;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,7 +49,14 @@ public class MainActivity extends ActionBarActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.tabs);
-
+        mSlidingTabLayout.setCustomTabView(R.layout.custom_tab_view, R.id.tabText);
+        mSlidingTabLayout.setDistributeEvenly(true);
+        mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.accent);
+            }
+        });
         mSlidingTabLayout.setViewPager(mViewPager);
     }
 
@@ -75,11 +87,11 @@ public class MainActivity extends ActionBarActivity {
 
     class MyPagerAdapter extends FragmentPagerAdapter {
 
-        String[] tabs;
+        String[] tabText = getResources().getStringArray(R.array.tabs);
+        int icons[] = {R.drawable.ic_action_home, R.drawable.ic_action_articles, R.drawable.ic_action_personal};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
-            tabs = getResources().getStringArray(R.array.tabs);
         }
 
         @Override
@@ -95,7 +107,13 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return tabs[position];
+            Drawable drawable = getResources().getDrawable(icons[position]);
+            Log.d("!!width", drawable.getIntrinsicWidth() + "");
+            drawable.setBounds(150, 0, 280, drawable.getIntrinsicHeight());
+            ImageSpan imageSpan = new ImageSpan(drawable);
+            SpannableString spannableString = new SpannableString(" ");
+            spannableString.setSpan(imageSpan, 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            return spannableString;
         }
     }
 
