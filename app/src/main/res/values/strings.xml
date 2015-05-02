@@ -20,5 +20,7 @@
         <item>TAB 3</item>
 
     </string-array>
+    <string name="title_activity_using_tab_library">UsingTabLibraryActivity</string>
+    <string name="action_tab_using_library">Tab using Library</string>
 
 </resources>

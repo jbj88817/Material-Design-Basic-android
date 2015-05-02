@@ -51,12 +51,10 @@ public class MainActivity extends ActionBarActivity {
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.tabs);
         mSlidingTabLayout.setCustomTabView(R.layout.custom_tab_view, R.id.tabText);
         mSlidingTabLayout.setDistributeEvenly(true);
-        mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-            @Override
-            public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.accent);
-            }
-        });
+        // colors for tab
+        mSlidingTabLayout.setBackgroundColor(getResources().getColor(R.color.primary));
+        mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.accent));
+
         mSlidingTabLayout.setViewPager(mViewPager);
     }
 
@@ -80,6 +78,9 @@ public class MainActivity extends ActionBarActivity {
         }
         if (id == R.id.navigate) {
             startActivity(new Intent(this, SubActivity.class));
+        }
+        if (id == R.id.action_tab_busing_library) {
+            startActivity(new Intent(this, UsingTabLibraryActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
