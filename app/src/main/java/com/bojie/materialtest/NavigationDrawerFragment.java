@@ -147,7 +147,6 @@ public class NavigationDrawerFragment extends Fragment {
                 mDrawerToggle.syncState();
             }
         });
-
     }
 
     public static void saveToPreferences(Context context, String preferenceName, String preferenceValue) {
