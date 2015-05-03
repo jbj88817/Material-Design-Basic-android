@@ -117,29 +117,4 @@ public class MainActivity extends ActionBarActivity {
             return spannableString;
         }
     }
-
-    public static class MyFragment extends Fragment {
-
-        private TextView mTextView;
-
-        public static MyFragment getInstance(int position) {
-            MyFragment myFragment = new MyFragment();
-            Bundle args = new Bundle();
-            args.putInt("position", position);
-            myFragment.setArguments(args);
-            return myFragment;
-        }
-
-        @Nullable
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View layout = inflater.inflate(R.layout.fragment_my, container, false);
-            mTextView = (TextView) layout.findViewById(R.id.position);
-            Bundle bundle = getArguments();
-            if (bundle != null) {
-                mTextView.setText("The Page Slected is " + bundle.getInt("position"));
-            }
-            return layout;
-        }
-    }
 }
