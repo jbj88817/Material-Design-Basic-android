@@ -92,7 +92,8 @@ public class UsingTabLibraryActivity extends ActionBarActivity implements Materi
     class MyPagerAdapter extends FragmentPagerAdapter {
 
         //String[] tabText = getResources().getStringArray(R.array.tabs);
-        int icons[] = {R.drawable.ic_action_home, R.drawable.ic_action_articles, R.drawable.ic_action_personal};
+        //int icons[] = {R.drawable.ic_action_home, R.drawable.ic_action_articles, R.drawable.ic_action_personal};
+        int icons[] = {R.drawable.vector_android, R.drawable.vector_android, R.drawable.vector_android};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);

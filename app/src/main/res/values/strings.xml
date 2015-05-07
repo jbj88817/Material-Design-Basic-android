@@ -22,5 +22,7 @@
     </string-array>
     <string name="title_activity_using_tab_library">UsingTabLibraryActivity</string>
     <string name="action_tab_using_library">Tab using Library</string>
+    <string name="title_activity_vector_test">VectorTestActivity</string>
+    <string name="vector_activity">VectorAcivity</string>
 
 </resources>

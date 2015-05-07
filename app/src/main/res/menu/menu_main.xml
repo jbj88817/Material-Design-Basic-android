@@ -14,9 +14,14 @@
         android:title="@string/next"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/action_tab_busing_library"
+        android:id="@+id/action_tab_using_library"
         android:orderInCategory="101"
         android:title="@string/action_tab_using_library"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_tab_vector_activity"
+        android:orderInCategory="102"
+        android:title="@string/vector_activity"
         app:showAsAction="never"/>
 
 </menu>
