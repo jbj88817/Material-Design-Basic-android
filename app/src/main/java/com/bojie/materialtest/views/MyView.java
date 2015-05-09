@@ -1,4 +1,4 @@
-package com.bojie.materialtest;
+package com.bojie.materialtest.views;
 
 import android.content.Context;
 import android.graphics.Paint;

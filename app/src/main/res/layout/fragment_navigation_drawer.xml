@@ -3,7 +3,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#DADADA"
-                tools:context="com.bojie.materialtest.NavigationDrawerFragment">
+                tools:context="com.bojie.materialtest.fragments.NavigationDrawerFragment">
 
     <LinearLayout
         android:id="@+id/containerDrawerImage"

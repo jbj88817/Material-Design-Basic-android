@@ -1,22 +1,28 @@
-package com.bojie.materialtest;
+package com.bojie.materialtest.activities;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.bojie.materialtest.fragments.MyFragment;
+import com.bojie.materialtest.R;
+import com.bojie.materialtest.fragments.NavigationDrawerFragment;
 
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
 
 
-public class UsingTabLibraryActivity extends ActionBarActivity implements MaterialTabListener{
+public class MainActivity extends ActionBarActivity implements MaterialTabListener{
 
     private Toolbar mToolbar;
     private MaterialTabHost mTabHost;
@@ -25,10 +31,17 @@ public class UsingTabLibraryActivity extends ActionBarActivity implements Materi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_using_tab_library);
+        setContentView(R.layout.activity_main);
         mToolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_navigation_drawer);
+        drawerFragment.setUp(R.id.fragment_navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout),
+                mToolbar);
+
 
         mTabHost = (MaterialTabHost) findViewById(R.id.materialTabHost);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -69,6 +82,15 @@ public class UsingTabLibraryActivity extends ActionBarActivity implements Materi
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        if (id == R.id.navigate) {
+            startActivity(new Intent(this, SubActivity.class));
+        }
+        if (id == R.id.action_tab_using_SlidingTabLayout) {
+            startActivity(new Intent(this, ActivityWithSlidingTabLayout.class));
+        }
+        if (id == R.id.action_tab_vector_activity) {
+            startActivity(new Intent(this, VectorTestActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

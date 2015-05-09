@@ -1,4 +1,4 @@
-package com.bojie.materialtest;
+package com.bojie.materialtest.material;
 
 import android.app.Application;
 import android.content.Context;

@@ -6,7 +6,7 @@ import android.util.LruCache;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.bojie.materialtest.MyApplication;
+import com.bojie.materialtest.material.MyApplication;
 
 /**
  * Created by bojiejiang on 5/2/15.

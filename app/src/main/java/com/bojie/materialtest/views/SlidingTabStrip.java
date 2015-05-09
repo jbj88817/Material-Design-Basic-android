@@ -1,4 +1,4 @@
-package com.bojie.materialtest.tabs;
+package com.bojie.materialtest.views;
 
 /**
  * Created by bojiejiang on 5/1/15.

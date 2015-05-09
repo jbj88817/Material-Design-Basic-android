@@ -1,4 +1,4 @@
-package com.bojie.materialtest;
+package com.bojie.materialtest.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+
+import com.bojie.materialtest.R;
 
 
 public class SubActivity extends ActionBarActivity {

@@ -1,4 +1,4 @@
-package com.bojie.materialtest;
+package com.bojie.materialtest.activities;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
@@ -17,10 +16,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.bojie.materialtest.tabs.SlidingTabLayout;
+import com.bojie.materialtest.R;
+import com.bojie.materialtest.fragments.MyFragment;
+import com.bojie.materialtest.views.SlidingTabLayout;
 
 
-public class MainActivity extends ActionBarActivity {
+public class ActivityWithSlidingTabLayout extends ActionBarActivity {
 
     private Toolbar mToolbar;
     private ViewPager mViewPager;
@@ -29,17 +30,12 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_using_sliding_tab_layout);
 
         mToolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.fragment_navigation_drawer);
-        drawerFragment.setUp(R.id.fragment_navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout),
-                mToolbar);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
@@ -75,7 +71,7 @@ public class MainActivity extends ActionBarActivity {
             startActivity(new Intent(this, SubActivity.class));
         }
         if (id == R.id.action_tab_using_library) {
-            startActivity(new Intent(this, UsingTabLibraryActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
         }
         if (id == R.id.action_tab_vector_activity) {
             startActivity(new Intent(this, VectorTestActivity.class));

@@ -1,16 +1,16 @@
-<com.bojie.materialtest.MyLayout
+<com.bojie.materialtest.views.MyLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.bojie.materialtest.SubActivity">
+    tools:context="com.bojie.materialtest.activities.SubActivity">
 
     <include
         android:id="@+id/app_bar"
         layout="@layout/app_bar"/>
 
-    <com.bojie.materialtest.MyView
+    <com.bojie.materialtest.views.MyView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -19,4 +19,4 @@
         android:text="My View"
         android:textColor="@android:color/black"/>
 
-</com.bojie.materialtest.MyLayout>
+</com.bojie.materialtest.views.MyLayout>

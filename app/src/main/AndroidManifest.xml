@@ -6,13 +6,13 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".MyApplication"
+        android:name=".material.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -21,26 +21,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SubActivity"
+            android:name=".activities.ActivityWithSlidingTabLayout"
+            android:label="@string/action_tab_using_SlidingTabLayout"
+            android:parentActivityName=".activities.MainActivity">
+        </activity>
+        <activity
+            android:name=".activities.SubActivity"
             android:label="@string/title_activity_sub"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bojie.materialtest.MainActivity"/>
+                android:value=".activities.MainActivity"/>
         </activity>
         <activity
-            android:name=".UsingTabLibraryActivity"
-            android:label="@string/title_activity_using_tab_library">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bojie.materialtest.MainActivity"/>
-        </activity>
-        <activity
-            android:name=".VectorTestActivity"
+            android:name=".activities.VectorTestActivity"
             android:label="@string/title_activity_vector_test">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bojie.materialtest.MainActivity"/>
+                android:value=".activities.MainActivity"/>
         </activity>
     </application>
 

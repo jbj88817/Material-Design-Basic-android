@@ -1,4 +1,4 @@
-package com.bojie.materialtest;
+package com.bojie.materialtest.fragments;
 
 
 import android.content.Context;
@@ -17,6 +17,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.bojie.materialtest.pojo.Information;
+import com.bojie.materialtest.R;
+import com.bojie.materialtest.adapters.RecycleAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.bojie.materialtest;
+package com.bojie.materialtest.activities;
 
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.bojie.materialtest.R;
+import com.bojie.materialtest.extras.Util;
 import com.telly.mrvector.MrVector;
 
 
