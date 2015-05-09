@@ -17,7 +17,7 @@
             android:id="@+id/app_bar"
             layout="@layout/app_bar"/>
 
-        <com.bojie.materialtest.util.SlidingTabLayout
+        <com.bojie.materialtest.tabs.SlidingTabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tabs"/>

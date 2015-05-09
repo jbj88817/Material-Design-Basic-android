@@ -1,11 +1,15 @@
 package com.bojie.materialtest;
 
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+
+import com.telly.mrvector.MrVector;
 
 
 public class VectorTestActivity extends ActionBarActivity {
@@ -20,6 +24,23 @@ public class VectorTestActivity extends ActionBarActivity {
         mToolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(mToolbar);
         mImageView = (ImageView) findViewById(R.id.vectorImage);
+
+        Drawable drawable = null;
+        if(Util.isLollipopOrGreater()){
+            drawable= MrVector.inflate(getResources(), R.drawable.animator_vector_clock);
+        }
+        else{
+            drawable=MrVector.inflate(getResources(), R.drawable.vector_clock);
+        }
+        if(Util.isJellyBeanOrGreater()){
+            mImageView.setBackground(drawable);
+        }
+        else{
+            mImageView.setBackgroundDrawable(drawable);
+        }
+        if(drawable instanceof Animatable){
+            ((Animatable)drawable).start();
+        }
     }
 
     @Override

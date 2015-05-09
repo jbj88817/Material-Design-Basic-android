@@ -17,7 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.bojie.materialtest.util.SlidingTabLayout;
+import com.bojie.materialtest.tabs.SlidingTabLayout;
 
 
 public class MainActivity extends ActionBarActivity {
