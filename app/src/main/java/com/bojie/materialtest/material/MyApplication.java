@@ -9,6 +9,7 @@ import android.content.Context;
 public class MyApplication extends Application {
 
     private static MyApplication sInstance;
+    public static final String API_KEY_ROTTEN_TOMATOES = "e4hvtyb5vhpd7wq24kj4dn35";
 
     @Override
     public void onCreate() {

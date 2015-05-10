@@ -13,20 +13,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.bojie.materialtest.fragments.MyFragment;
 import com.bojie.materialtest.R;
+import com.bojie.materialtest.fragments.BoxOfficeFragment;
 import com.bojie.materialtest.fragments.NavigationDrawerFragment;
+import com.bojie.materialtest.fragments.SearchFragment;
+import com.bojie.materialtest.fragments.UpcomingFragment;
 
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
 
 
-public class MainActivity extends ActionBarActivity implements MaterialTabListener{
+public class MainActivity extends ActionBarActivity implements MaterialTabListener {
 
     private Toolbar mToolbar;
     private MaterialTabHost mTabHost;
     private ViewPager mViewPager;
+    private static final int MOVIES_SEARCH_RESULTS = 0;
+    private static final int MOVIES_HITS = 1;
+    private static final int MOVIES_UPCOMING = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +53,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 mTabHost.setSelectedNavigationItem(position);
@@ -114,8 +119,8 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     class MyPagerAdapter extends FragmentPagerAdapter {
 
         //String[] tabText = getResources().getStringArray(R.array.tabs);
-        //int icons[] = {R.drawable.ic_action_home, R.drawable.ic_action_articles, R.drawable.ic_action_personal};
-        int icons[] = {R.drawable.vector_android, R.drawable.vector_android, R.drawable.vector_android};
+        int icons[] = {R.drawable.ic_action_home, R.drawable.ic_action_articles, R.drawable.ic_action_personal};
+        //int icons[] = {R.drawable.vector_android, R.drawable.vector_android, R.drawable.vector_android};
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -123,8 +128,19 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         @Override
         public Fragment getItem(int i) {
-            MyFragment myFragment = MyFragment.getInstance(i);
-            return myFragment;
+            Fragment fragment = null;
+            switch (i) {
+                case MOVIES_SEARCH_RESULTS:
+                    fragment = SearchFragment.newInstance("", "");
+                    break;
+                case MOVIES_HITS:
+                    fragment = BoxOfficeFragment.newInstance("", "");
+                    break;
+                case MOVIES_UPCOMING:
+                    fragment = UpcomingFragment.newInstance("", "");
+                    break;
+            }
+            return fragment;
         }
 
         @Override
