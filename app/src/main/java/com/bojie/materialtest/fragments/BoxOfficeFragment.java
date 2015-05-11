@@ -17,6 +17,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bojie.materialtest.R;
 import com.bojie.materialtest.adapters.BoxOfficeAdapter;
+import com.bojie.materialtest.extras.Constants;
 import com.bojie.materialtest.material.MyApplication;
 import com.bojie.materialtest.network.VolleySingleton;
 import com.bojie.materialtest.pojo.Movie;
@@ -118,7 +119,7 @@ public class BoxOfficeFragment extends Fragment {
 
     private void sendJSONRequest() {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
-                getRequestUrl(10),
+                getRequestUrl(30),
                 (String) null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -142,49 +143,83 @@ public class BoxOfficeFragment extends Fragment {
             try {
                 JSONArray arrayMovies = response.getJSONArray(KEY_MOVIES);
                 for (int i = 0; i < arrayMovies.length(); i++) {
+
+                    // Initial
+                    long id = -1;
+                    String title = Constants.NA;
+                    String releaseDate = Constants.NA;
+                    int audienceScore = -1;
+                    String synopsis = Constants.NA;
+                    String urlThumbnail = Constants.NA;
+                    Date date = null;
+
                     JSONObject currentMovie = arrayMovies.getJSONObject(i);
 
-                    // Basic
-                    long id = currentMovie.getLong(KEY_ID);
-                    String title = currentMovie.getString(KEY_TITLE);
+                    // Id of the current movie
+                    if (currentMovie.has(KEY_ID)
+                            && !currentMovie.isNull(KEY_ID)) {
+                        id = currentMovie.getLong(KEY_ID);
+                    }
+                    // Title of the current movie
+                    if (currentMovie.has(KEY_TITLE)
+                            && !currentMovie.isNull(KEY_TITLE)) {
+                        title = currentMovie.getString(KEY_TITLE);
+                    }
 
                     // Release Date
-                    JSONObject objectReleaseDate = currentMovie.getJSONObject(KEY_RELEASE_DATES);
-                    String releaseDate = null;
-                    if (objectReleaseDate.has(KEY_THEATER)) {
-                        releaseDate = objectReleaseDate.getString(KEY_THEATER);
-                    } else {
-                        releaseDate = "NA";
+                    if (currentMovie.has(KEY_RELEASE_DATES)
+                            && !currentMovie.isNull(KEY_RELEASE_DATES)) {
+                        JSONObject objectReleaseDates = currentMovie.getJSONObject(KEY_RELEASE_DATES);
+
+                        if (objectReleaseDates != null
+                                && objectReleaseDates.has(KEY_THEATER)
+                                && !objectReleaseDates.isNull(KEY_THEATER)) {
+                            releaseDate = objectReleaseDates.getString(KEY_THEATER);
+                        }
                     }
 
                     // Audience Score
                     JSONObject objectRatings = currentMovie.getJSONObject(KEY_RATINGS);
-                    int audienceScore = -1;
-                    if (objectRatings.has(KEY_AUDIENCE_SCORE)) {
-                        audienceScore = objectRatings.getInt(KEY_AUDIENCE_SCORE);
+                    if (objectRatings.has(KEY_AUDIENCE_SCORE)
+                            && !currentMovie.isNull(KEY_RATINGS)) {
+                        if (objectRatings != null
+                                && objectRatings.has(KEY_AUDIENCE_SCORE)
+                                && !objectRatings.isNull(KEY_AUDIENCE_SCORE)) {
+                            audienceScore = objectRatings.getInt(KEY_AUDIENCE_SCORE);
+                        }
                     }
 
                     // Synopsis
-                    String synopsis = currentMovie.getString(KEY_SYNOPSIS);
+                    if (currentMovie.has(KEY_SYNOPSIS)
+                            && !currentMovie.isNull(KEY_SYNOPSIS)) {
+                        synopsis = currentMovie.getString(KEY_SYNOPSIS);
+                    }
 
                     // Poster image
-                    JSONObject objectPosters = currentMovie.getJSONObject(KEY_POSTERS);
-                    String urlThumbnail = null;
-                    if (objectPosters.has(KEY_THUMBNAIL)) {
-                        urlThumbnail = objectPosters.getString(KEY_THUMBNAIL);
+                    if (currentMovie.has(KEY_POSTERS)
+                            && !currentMovie.isNull(KEY_POSTERS)) {
+                        JSONObject objectPosters = currentMovie.getJSONObject(KEY_POSTERS);
+
+                        if (objectPosters != null
+                                && objectPosters.has(KEY_THUMBNAIL)
+                                && !objectPosters.isNull(KEY_THUMBNAIL)) {
+                            urlThumbnail = objectPosters.getString(KEY_THUMBNAIL);
+                        }
                     }
 
                     // Set to movie object
                     Movie movie = new Movie();
                     movie.setId(id);
                     movie.setTitle(title);
-                    Date date = mDateFormat.parse(releaseDate);
+                    date = mDateFormat.parse(releaseDate);
                     movie.setReleaseDateTheater(date);
                     movie.setUrlThumbnail(urlThumbnail);
                     movie.setAudienceScore(audienceScore);
 
                     // Add to movieList
-                    movieArrayList.add(movie);
+                    if (id != -1 && !title.equals(Constants.NA)) {
+                        movieArrayList.add(movie);
+                    }
 
                 }
 

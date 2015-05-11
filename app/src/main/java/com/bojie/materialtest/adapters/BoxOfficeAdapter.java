@@ -12,10 +12,14 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.bojie.materialtest.R;
+import com.bojie.materialtest.extras.Constants;
 import com.bojie.materialtest.network.VolleySingleton;
 import com.bojie.materialtest.pojo.Movie;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by bojiejiang on 5/10/15.
@@ -27,6 +31,7 @@ public class BoxOfficeAdapter extends RecyclerView.Adapter<BoxOfficeAdapter.BoxO
     private VolleySingleton mVolleySingleton;
     private ImageLoader mImageLoader;
     private Context mContext;
+    private DateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public BoxOfficeAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
@@ -51,12 +56,32 @@ public class BoxOfficeAdapter extends RecyclerView.Adapter<BoxOfficeAdapter.BoxO
     public void onBindViewHolder(final BoxOfficeViewHolder holder, int position) {
         Movie currentMovie = mMovieArrayList.get(position);
         holder.movieTitle.setText(currentMovie.getTitle());
-        holder.moveReleaseDate.setText(currentMovie.getReleaseDateTheater().toString());
-        holder.movieAudienceScore.setRating(currentMovie.getAudienceScore() / 20.0F);
+
+        Date movieReleaseDate = currentMovie.getReleaseDateTheater();
+        if (movieReleaseDate != null) {
+            String formattedDate = mDateFormat.format(movieReleaseDate);
+            holder.movieReleaseDate.setText(formattedDate);
+        } else {
+            holder.movieReleaseDate.setText(Constants.NA);
+        }
+
+        int audienceScore = currentMovie.getAudienceScore();
+        if (audienceScore == -1) {
+            holder.movieAudienceScore.setRating(0.0F);
+            holder.movieAudienceScore.setAlpha(0.5F);
+        } else {
+            holder.movieAudienceScore.setRating(audienceScore / 20.0F);
+            holder.movieAudienceScore.setAlpha(1.0F);
+        }
 
         //
         String urlThumbnail = currentMovie.getUrlThumbnail();
-        if (urlThumbnail != null) {
+
+        loadImages(urlThumbnail, holder);
+    }
+
+    private void loadImages(String urlThumbnail, final BoxOfficeViewHolder holder) {
+        if (!urlThumbnail.equals(Constants.NA)) {
             mImageLoader.get(urlThumbnail, new ImageLoader.ImageListener() {
                 @Override
                 public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
@@ -80,14 +105,14 @@ public class BoxOfficeAdapter extends RecyclerView.Adapter<BoxOfficeAdapter.BoxO
 
         private ImageView movieThumbnail;
         private TextView movieTitle;
-        private TextView moveReleaseDate;
+        private TextView movieReleaseDate;
         private RatingBar movieAudienceScore;
 
         public BoxOfficeViewHolder(View itemView) {
             super(itemView);
             movieThumbnail = (ImageView) itemView.findViewById(R.id.movieThumbnail);
             movieTitle = (TextView) itemView.findViewById(R.id.movieTitle);
-            moveReleaseDate = (TextView) itemView.findViewById(R.id.movieReleaseDate);
+            movieReleaseDate = (TextView) itemView.findViewById(R.id.movieReleaseDate);
             movieAudienceScore = (RatingBar) itemView.findViewById(R.id.movieAudienceScore);
         }
     }
