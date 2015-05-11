@@ -8,10 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -70,6 +77,7 @@ public class BoxOfficeFragment extends Fragment {
     private DateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private RecyclerView mListMovieHits;
     private BoxOfficeAdapter mBoxOfficeAdapter;
+    private TextView mVolleyError;
 
 
     /**
@@ -124,16 +132,39 @@ public class BoxOfficeFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        mVolleyError.setVisibility(View.GONE);
                         mMoviesList = parseJSONResponse(response);
                         mBoxOfficeAdapter.setMovieArrayList(mMoviesList);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                handleVolleyError(error);
             }
         });
         mRequestQueue.add(request);
+    }
+
+    private void handleVolleyError(VolleyError error) {
+        mVolleyError.setVisibility(View.VISIBLE);
+        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+            mVolleyError.setText(R.string.error_timeout);
+
+        } else if (error instanceof AuthFailureError) {
+            mVolleyError.setText(R.string.error_auth_failure);
+            //TODO
+        } else if (error instanceof ServerError) {
+            mVolleyError.setText(R.string.error_auth_failure);
+            //TODO
+        } else if (error instanceof NetworkError) {
+            mVolleyError.setText(R.string.error_network);
+            //TODO
+        } else if (error instanceof ParseError) {
+            mVolleyError.setText(R.string.error_parser);
+            //TODO
+        }
+
+        
     }
 
     private ArrayList<Movie> parseJSONResponse(JSONObject response) {
@@ -238,6 +269,7 @@ public class BoxOfficeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_box_office, container, false);
+        mVolleyError = (TextView) view.findViewById(R.id.tv_VolleyError);
         mListMovieHits = (RecyclerView) view.findViewById(R.id.listMovieHits);
         mListMovieHits.setLayoutManager(new LinearLayoutManager(getActivity()));
         mBoxOfficeAdapter = new BoxOfficeAdapter(getActivity());
