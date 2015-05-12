@@ -45,13 +45,15 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.fragment_navigation_drawer);
-        drawerFragment.setUp(R.id.fragment_navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout),
-                mToolbar);
+        setUpNavigationDrawer();
 
+        buildTab();
 
+        buildFAB();
+
+    }
+
+    private void buildTab() {
         mTabHost = (MaterialTabHost) findViewById(R.id.materialTabHost);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
 
@@ -72,23 +74,35 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                             .setTabListener(this)
             );
         }
+    }
 
+    private void setUpNavigationDrawer() {
+        NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_navigation_drawer);
+        drawerFragment.setUp(R.id.fragment_navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout),
+                mToolbar);
+    }
+
+    private void buildFAB() {
         // Float Action Button
         ImageView icon = new ImageView(this); // Create an icon
-        icon.setImageResource(R.mipmap.ic_launcher);
+        icon.setImageResource(R.drawable.ic_action_new);
 
         FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
+                .setBackgroundDrawable(R.drawable.selector_button_red)
                 .build();
 
         ImageView iconSortName = new ImageView(this);
-        iconSortName.setImageResource(R.drawable.ic_action_personal);
+        iconSortName.setImageResource(R.drawable.ic_action_alphabets);
         ImageView iconSortDate = new ImageView(this);
-        iconSortDate.setImageResource(R.drawable.ic_action_home);
+        iconSortDate.setImageResource(R.drawable.ic_action_calendar);
         ImageView iconSortRatings = new ImageView(this);
-        iconSortRatings.setImageResource(R.drawable.ic_action_articles);
+        iconSortRatings.setImageResource(R.drawable.ic_action_important);
 
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+        itemBuilder.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_sub_button_gray));
         SubActionButton buttonSortName = itemBuilder.setContentView(iconSortName).build();
         SubActionButton buttonSortDate = itemBuilder.setContentView(iconSortDate).build();
         SubActionButton buttonSortRatings = itemBuilder.setContentView(iconSortRatings).build();
@@ -99,7 +113,6 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                 .addSubActionView(buttonSortRatings)
                 .attachTo(actionButton)
                 .build();
-
     }
 
     @Override
