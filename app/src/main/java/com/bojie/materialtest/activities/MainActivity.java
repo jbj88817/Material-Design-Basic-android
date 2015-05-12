@@ -12,12 +12,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.bojie.materialtest.R;
 import com.bojie.materialtest.fragments.BoxOfficeFragment;
 import com.bojie.materialtest.fragments.NavigationDrawerFragment;
 import com.bojie.materialtest.fragments.SearchFragment;
 import com.bojie.materialtest.fragments.UpcomingFragment;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
@@ -68,6 +72,34 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                             .setTabListener(this)
             );
         }
+
+        // Float Action Button
+        ImageView icon = new ImageView(this); // Create an icon
+        icon.setImageResource(R.mipmap.ic_launcher);
+
+        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
+                .setContentView(icon)
+                .build();
+
+        ImageView iconSortName = new ImageView(this);
+        iconSortName.setImageResource(R.drawable.ic_action_personal);
+        ImageView iconSortDate = new ImageView(this);
+        iconSortDate.setImageResource(R.drawable.ic_action_home);
+        ImageView iconSortRatings = new ImageView(this);
+        iconSortRatings.setImageResource(R.drawable.ic_action_articles);
+
+        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+        SubActionButton buttonSortName = itemBuilder.setContentView(iconSortName).build();
+        SubActionButton buttonSortDate = itemBuilder.setContentView(iconSortDate).build();
+        SubActionButton buttonSortRatings = itemBuilder.setContentView(iconSortRatings).build();
+
+        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
+                .addSubActionView(buttonSortName)
+                .addSubActionView(buttonSortDate)
+                .addSubActionView(buttonSortRatings)
+                .attachTo(actionButton)
+                .build();
+
     }
 
     @Override

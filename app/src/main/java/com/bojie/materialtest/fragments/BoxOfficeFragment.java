@@ -164,7 +164,6 @@ public class BoxOfficeFragment extends Fragment {
             //TODO
         }
 
-        
     }
 
     private ArrayList<Movie> parseJSONResponse(JSONObject response) {
