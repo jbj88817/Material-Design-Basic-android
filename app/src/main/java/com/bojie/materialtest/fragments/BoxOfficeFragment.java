@@ -25,6 +25,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.bojie.materialtest.R;
 import com.bojie.materialtest.adapters.BoxOfficeAdapter;
 import com.bojie.materialtest.extras.Constants;
+import com.bojie.materialtest.extras.SortListener;
+import com.bojie.materialtest.logging.L;
 import com.bojie.materialtest.material.MyApplication;
 import com.bojie.materialtest.network.VolleySingleton;
 import com.bojie.materialtest.pojo.Movie;
@@ -60,7 +62,7 @@ import static com.bojie.materialtest.extras.UriEndpoints.URL_PARAM_LIMIT;
  * Use the {@link BoxOfficeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BoxOfficeFragment extends Fragment {
+public class BoxOfficeFragment extends Fragment implements SortListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -278,4 +280,18 @@ public class BoxOfficeFragment extends Fragment {
     }
 
 
+    @Override
+    public void onSortByName() {
+        L.t(getActivity(), "BoxOffice sort by name");
+    }
+
+    @Override
+    public void onSortByDate() {
+
+    }
+
+    @Override
+    public void onSortByRating() {
+
+    }
 }

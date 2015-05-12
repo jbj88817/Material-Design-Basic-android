@@ -8,13 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bojie.materialtest.R;
+import com.bojie.materialtest.extras.SortListener;
+import com.bojie.materialtest.logging.L;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements SortListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -64,4 +66,18 @@ public class SearchFragment extends Fragment {
     }
 
 
+    @Override
+    public void onSortByName() {
+        L.t(getActivity(), "Search sort by name");
+    }
+
+    @Override
+    public void onSortByDate() {
+
+    }
+
+    @Override
+    public void onSortByRating() {
+
+    }
 }

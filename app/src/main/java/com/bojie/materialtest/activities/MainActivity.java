@@ -12,9 +12,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bojie.materialtest.R;
+import com.bojie.materialtest.extras.SortListener;
 import com.bojie.materialtest.fragments.BoxOfficeFragment;
 import com.bojie.materialtest.fragments.NavigationDrawerFragment;
 import com.bojie.materialtest.fragments.SearchFragment;
@@ -28,14 +30,19 @@ import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
 
 
-public class MainActivity extends ActionBarActivity implements MaterialTabListener {
+public class MainActivity extends ActionBarActivity implements MaterialTabListener,
+        View.OnClickListener {
 
     private Toolbar mToolbar;
     private MaterialTabHost mTabHost;
     private ViewPager mViewPager;
+    private MyPagerAdapter mMyPagerAdapter;
     private static final int MOVIES_SEARCH_RESULTS = 0;
     private static final int MOVIES_HITS = 1;
     private static final int MOVIES_UPCOMING = 2;
+    private static final String TAG_SORT_NAME = "sortName";
+    private static final String TAG_SORT_DATE = "sortDate";
+    private static final String TAG_SORT_RATINGS = "sortRatings";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +64,8 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         mTabHost = (MaterialTabHost) findViewById(R.id.materialTabHost);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
 
-        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(adapter);
+        mMyPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mMyPagerAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -67,10 +74,10 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         });
 
         // insert all tabs from pagerAdapter data
-        for (int i = 0; i < adapter.getCount(); i++) {
+        for (int i = 0; i < mMyPagerAdapter.getCount(); i++) {
             mTabHost.addTab(
                     mTabHost.newTab()
-                            .setIcon(adapter.getIcon(i))
+                            .setIcon(mMyPagerAdapter.getIcon(i))
                             .setTabListener(this)
             );
         }
@@ -103,9 +110,19 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
         itemBuilder.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_sub_button_gray));
+
+        // Build the sub buttons
         SubActionButton buttonSortName = itemBuilder.setContentView(iconSortName).build();
         SubActionButton buttonSortDate = itemBuilder.setContentView(iconSortDate).build();
         SubActionButton buttonSortRatings = itemBuilder.setContentView(iconSortRatings).build();
+
+        buttonSortName.setTag(TAG_SORT_NAME);
+        buttonSortDate.setTag(TAG_SORT_DATE);
+        buttonSortRatings.setTag(TAG_SORT_RATINGS);
+
+        buttonSortDate.setOnClickListener(this);
+        buttonSortName.setOnClickListener(this);
+        buttonSortRatings.setOnClickListener(this);
 
         FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
                 .addSubActionView(buttonSortName)
@@ -158,6 +175,25 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
     @Override
     public void onTabUnselected(MaterialTab materialTab) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (v.getTag().equals(TAG_SORT_NAME)) {
+            Fragment fragment = (Fragment) mMyPagerAdapter
+                    .instantiateItem(mViewPager, mViewPager.getCurrentItem());
+            if (fragment instanceof SortListener) {
+                ((SortListener) fragment).onSortByName();
+            }
+        }
+        if (v.getTag().equals(TAG_SORT_DATE)) {
+
+        }
+        if (v.getTag().equals(TAG_SORT_RATINGS)) {
+
+        }
 
     }
 
