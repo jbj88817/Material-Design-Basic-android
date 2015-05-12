@@ -25,6 +25,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.bojie.materialtest.R;
 import com.bojie.materialtest.adapters.BoxOfficeAdapter;
 import com.bojie.materialtest.extras.Constants;
+import com.bojie.materialtest.extras.MovieSorter;
 import com.bojie.materialtest.extras.SortListener;
 import com.bojie.materialtest.logging.L;
 import com.bojie.materialtest.material.MyApplication;
@@ -80,6 +81,7 @@ public class BoxOfficeFragment extends Fragment implements SortListener{
     private RecyclerView mListMovieHits;
     private BoxOfficeAdapter mBoxOfficeAdapter;
     private TextView mVolleyError;
+    private MovieSorter mMovieSorter;
 
 
     /**
@@ -270,6 +272,7 @@ public class BoxOfficeFragment extends Fragment implements SortListener{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_box_office, container, false);
+        mMovieSorter = new MovieSorter();
         mVolleyError = (TextView) view.findViewById(R.id.tv_VolleyError);
         mListMovieHits = (RecyclerView) view.findViewById(R.id.listMovieHits);
         mListMovieHits.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -283,15 +286,19 @@ public class BoxOfficeFragment extends Fragment implements SortListener{
     @Override
     public void onSortByName() {
         L.t(getActivity(), "BoxOffice sort by name");
+        mMovieSorter.sortMoviesByName(mMoviesList);
+        mBoxOfficeAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onSortByDate() {
-
+        mMovieSorter.sortMoviesByDate(mMoviesList);
+        mBoxOfficeAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onSortByRating() {
-
+        mMovieSorter.sortMoviesByRating(mMoviesList);
+        mBoxOfficeAdapter.notifyDataSetChanged();
     }
 }

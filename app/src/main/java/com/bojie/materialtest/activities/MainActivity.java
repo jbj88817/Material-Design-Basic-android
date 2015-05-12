@@ -181,20 +181,20 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     @Override
     public void onClick(View v) {
 
-        if (v.getTag().equals(TAG_SORT_NAME)) {
-            Fragment fragment = (Fragment) mMyPagerAdapter
-                    .instantiateItem(mViewPager, mViewPager.getCurrentItem());
-            if (fragment instanceof SortListener) {
+        Fragment fragment = (Fragment) mMyPagerAdapter
+                .instantiateItem(mViewPager, mViewPager.getCurrentItem());
+
+        if (fragment instanceof SortListener) {
+            if (v.getTag().equals(TAG_SORT_NAME)) {
                 ((SortListener) fragment).onSortByName();
             }
+            if (v.getTag().equals(TAG_SORT_DATE)) {
+                ((SortListener) fragment).onSortByDate();
+            }
+            if (v.getTag().equals(TAG_SORT_RATINGS)) {
+                ((SortListener) fragment).onSortByRating();
+            }
         }
-        if (v.getTag().equals(TAG_SORT_DATE)) {
-
-        }
-        if (v.getTag().equals(TAG_SORT_RATINGS)) {
-
-        }
-
     }
 
     class MyPagerAdapter extends FragmentPagerAdapter {
