@@ -1,5 +1,6 @@
 package com.bojie.materialtest.activities;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.bojie.materialtest.fragments.BoxOfficeFragment;
 import com.bojie.materialtest.fragments.NavigationDrawerFragment;
 import com.bojie.materialtest.fragments.SearchFragment;
 import com.bojie.materialtest.fragments.UpcomingFragment;
+import com.bojie.materialtest.services.MyService;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
@@ -28,15 +30,19 @@ import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
+import me.tatarka.support.job.JobInfo;
+import me.tatarka.support.job.JobScheduler;
 
 
 public class MainActivity extends ActionBarActivity implements MaterialTabListener,
         View.OnClickListener {
 
+    private static final int JOB_ID = 100;
     private Toolbar mToolbar;
     private MaterialTabHost mTabHost;
     private ViewPager mViewPager;
     private MyPagerAdapter mMyPagerAdapter;
+    private JobScheduler mJobScheduler;
     private static final int MOVIES_SEARCH_RESULTS = 0;
     private static final int MOVIES_HITS = 1;
     private static final int MOVIES_UPCOMING = 2;
@@ -52,12 +58,27 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // JobScheduler
+        mJobScheduler = JobScheduler.getInstance(this);
+        constructJob();
+
         setUpNavigationDrawer();
 
         buildTab();
 
         buildFAB();
 
+    }
+
+    private void constructJob() {
+        JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, new ComponentName(this, MyService.class));
+
+        builder.setPeriodic(2000)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                .setPersisted(true)
+                .build();
+
+        mJobScheduler.schedule(builder.build());
     }
 
     private void buildTab() {
