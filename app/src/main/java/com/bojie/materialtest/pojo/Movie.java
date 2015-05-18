@@ -1,11 +1,14 @@
 package com.bojie.materialtest.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
  * Created by bojiejiang on 5/9/15.
  */
-public class Movie {
+public class Movie implements Parcelable {
 
     private Long id;
     private String title;
@@ -134,4 +137,56 @@ public class Movie {
                 "urlThumbnail " + urlThumbnail +
                 "\n";
     }
+
+    protected Movie(Parcel in) {
+        id = in.readByte() == 0x00 ? null : in.readLong();
+        title = in.readString();
+        long tmpReleaseDateTheater = in.readLong();
+        releaseDateTheater = tmpReleaseDateTheater != -1 ? new Date(tmpReleaseDateTheater) : null;
+        audienceScore = in.readInt();
+        synopsis = in.readString();
+        urlThumbnail = in.readString();
+        urlSelf = in.readString();
+        urlCast = in.readString();
+        urlReviews = in.readString();
+        urlSimilar = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeLong(id);
+        }
+        dest.writeString(title);
+        dest.writeLong(releaseDateTheater != null ? releaseDateTheater.getTime() : -1L);
+        dest.writeInt(audienceScore);
+        dest.writeString(synopsis);
+        dest.writeString(urlThumbnail);
+        dest.writeString(urlSelf);
+        dest.writeString(urlCast);
+        dest.writeString(urlReviews);
+        dest.writeString(urlSimilar);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
 }

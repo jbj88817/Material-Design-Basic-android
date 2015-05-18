@@ -69,6 +69,7 @@ public class BoxOfficeFragment extends Fragment implements SortListener{
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String STATE_MOVIES = "state_movies";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -100,6 +101,12 @@ public class BoxOfficeFragment extends Fragment implements SortListener{
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(STATE_MOVIES, mMoviesList);
     }
 
     public static String getRequestUrl(int limit) {
@@ -278,7 +285,12 @@ public class BoxOfficeFragment extends Fragment implements SortListener{
         mListMovieHits.setLayoutManager(new LinearLayoutManager(getActivity()));
         mBoxOfficeAdapter = new BoxOfficeAdapter(getActivity());
         mListMovieHits.setAdapter(mBoxOfficeAdapter);
-        sendJSONRequest();
+        if (savedInstanceState != null) {
+            mMoviesList = savedInstanceState.getParcelableArrayList(STATE_MOVIES);
+            mBoxOfficeAdapter.setMovieArrayList(mMoviesList);
+        } else {
+            sendJSONRequest();
+        }
         return view;
     }
 
