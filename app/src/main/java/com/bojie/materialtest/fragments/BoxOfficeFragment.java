@@ -172,6 +172,6 @@ public class BoxOfficeFragment extends Fragment implements SortListener, BoxOffi
     @Override
     public void onBoxOfficeMoviesLoaded(ArrayList<Movie> movieArrayList) {
         L.t(getActivity(), "onBoxOfficeMoviesLoaded Fragment");
-        mBoxOfficeAdapter.setMovieArrayList(mMoviesList);
+        mBoxOfficeAdapter.setMovieArrayList(movieArrayList);
     }
 }
