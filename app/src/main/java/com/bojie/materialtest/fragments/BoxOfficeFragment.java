@@ -21,12 +21,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.bojie.materialtest.R;
 import com.bojie.materialtest.adapters.BoxOfficeAdapter;
+import com.bojie.materialtest.callbacks.BoxOfficeMoviesLoaderListener;
 import com.bojie.materialtest.extras.MovieSorter;
 import com.bojie.materialtest.extras.SortListener;
 import com.bojie.materialtest.logging.L;
 import com.bojie.materialtest.material.MyApplication;
 import com.bojie.materialtest.network.VolleySingleton;
 import com.bojie.materialtest.pojo.Movie;
+import com.bojie.materialtest.task.TaskLoadMoviesBoxOffice;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -37,7 +39,7 @@ import java.util.ArrayList;
  * Use the {@link BoxOfficeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BoxOfficeFragment extends Fragment implements SortListener {
+public class BoxOfficeFragment extends Fragment implements SortListener, BoxOfficeMoviesLoaderListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -133,10 +135,15 @@ public class BoxOfficeFragment extends Fragment implements SortListener {
         mListMovieHits.setLayoutManager(new LinearLayoutManager(getActivity()));
         mBoxOfficeAdapter = new BoxOfficeAdapter(getActivity());
         mListMovieHits.setAdapter(mBoxOfficeAdapter);
+
         if (savedInstanceState != null) {
             mMoviesList = savedInstanceState.getParcelableArrayList(STATE_MOVIES);
         } else {
             mMoviesList = MyApplication.getWritableDatabase().getAllMoviesBoxOffice();
+            if (mMoviesList.isEmpty()) {
+                L.t(getActivity(), "executing task from fragment");
+                new TaskLoadMoviesBoxOffice(this).execute();
+            }
         }
         mBoxOfficeAdapter.setMovieArrayList(mMoviesList);
         return view;
@@ -160,5 +167,11 @@ public class BoxOfficeFragment extends Fragment implements SortListener {
     public void onSortByRating() {
         mMovieSorter.sortMoviesByRating(mMoviesList);
         mBoxOfficeAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBoxOfficeMoviesLoaded(ArrayList<Movie> movieArrayList) {
+        L.t(getActivity(), "onBoxOfficeMoviesLoaded Fragment");
+        mBoxOfficeAdapter.setMovieArrayList(mMoviesList);
     }
 }

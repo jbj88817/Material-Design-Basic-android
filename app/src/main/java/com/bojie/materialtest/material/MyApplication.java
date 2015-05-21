@@ -18,6 +18,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+        sMoviesDatabase = new MoviesDatabase(this);
     }
 
     public synchronized static MoviesDatabase getWritableDatabase() {

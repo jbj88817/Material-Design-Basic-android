@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -46,6 +47,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     private static final int MOVIES_SEARCH_RESULTS = 0;
     private static final int MOVIES_HITS = 1;
     private static final int MOVIES_UPCOMING = 2;
+    private static final long POLL_FREQUENCY = 600000;
     private static final String TAG_SORT_NAME = "sortName";
     private static final String TAG_SORT_DATE = "sortDate";
     private static final String TAG_SORT_RATINGS = "sortRatings";
@@ -60,7 +62,12 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         // JobScheduler
         mJobScheduler = JobScheduler.getInstance(this);
-        constructJob();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                constructJob();
+            }
+        }, 30000);
 
         setUpNavigationDrawer();
 
@@ -73,7 +80,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     private void constructJob() {
         JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, new ComponentName(this, MyService.class));
 
-        builder.setPeriodic(2000)
+        builder.setPeriodic(POLL_FREQUENCY)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
                 .setPersisted(true)
                 .build();
