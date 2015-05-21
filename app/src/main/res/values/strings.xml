@@ -31,4 +31,22 @@
     <string name="error_network">Oops! RottenTomatoes Server Just Messed Up</string>
     <string name="error_parser">Oops! Data Received Was An Unreadable Mess</string>
 
+    <string name="title_activity_dynamic_tabs">Dynamic Tabs</string>
+    <string name="add_tab">Add Tab</string>
+    <string name="action_dynamic_tabs_activity">Dynamic Tabs</string>
+    <string name="title_activity_recycler_item_animations">RecyclerItemAnimations
+    </string>
+    <string name="action_recycler_item_animations">RecyclerItemAnimator</string>
+    <string name="action_add">+</string>
+    <string name="action_remove">-</string>
+    <string name="add_item">Add Item</string>
+    <string name="title_activity_activity_calling">Content A</string>
+    <string name="title_activity_activity_called">Content B</string>
+    <string name="action_activity_calling">ContentTransitions</string>
+    <string name="title_activity_activity_shared">Shared A</string>
+    <string name="title_activity_activity_shared_b">Shared B</string>
+    <string name="action_shared_transitions">SharedElementsTransition</string>
+    <string name="title_activity_recycler_animators">RecyclerAnimatorsActivity</string>
+    <string name="action_recycler_animators">Recycler Animators</string>
+
 </resources>

@@ -52,7 +52,7 @@ public class ActivityWithSlidingTabLayout extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_using_sliding_tab, menu);
         return true;
     }
 
@@ -69,9 +69,6 @@ public class ActivityWithSlidingTabLayout extends ActionBarActivity {
         }
         if (id == R.id.navigate) {
             startActivity(new Intent(this, SubActivity.class));
-        }
-        if (id == R.id.action_tab_using_library) {
-            startActivity(new Intent(this, MainActivity.class));
         }
         if (id == R.id.action_tab_vector_activity) {
             startActivity(new Intent(this, VectorTestActivity.class));

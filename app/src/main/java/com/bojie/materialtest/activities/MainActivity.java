@@ -163,7 +163,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_using_tab_library, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -186,6 +186,9 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         }
         if (id == R.id.action_tab_vector_activity) {
             startActivity(new Intent(this, VectorTestActivity.class));
+        }
+        if (id == R.id.action_recycler_animators_activity) {
+            startActivity(new Intent(this, RecyclerAnimatorsActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
