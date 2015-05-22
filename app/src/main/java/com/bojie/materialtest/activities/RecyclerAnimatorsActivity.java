@@ -13,6 +13,8 @@ import android.widget.EditText;
 import com.bojie.materialtest.R;
 import com.bojie.materialtest.adapters.RecyclerAnimatorsAdapter;
 
+import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
+
 public class RecyclerAnimatorsActivity extends ActionBarActivity {
 
     private EditText mInput;
@@ -33,6 +35,10 @@ public class RecyclerAnimatorsActivity extends ActionBarActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerAnimatedItems);
         mAdapter = new RecyclerAnimatorsAdapter(this);
+        ScaleInAnimator animator = new ScaleInAnimator();
+        animator.setAddDuration(500);
+        animator.setRemoveDuration(500);
+        mRecyclerView.setItemAnimator(animator);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

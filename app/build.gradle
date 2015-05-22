@@ -19,6 +19,10 @@ android {
     }
 }
 
+repositories {
+    jcenter()
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
@@ -29,4 +33,5 @@ dependencies {
     compile 'com.telly:mrvector:0.2.0'
     compile 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
     compile 'me.tatarka.support:jobscheduler:0.1.1'
+    compile 'jp.wasabeef:recyclerview-animators:1.2.0@aar'
 }
