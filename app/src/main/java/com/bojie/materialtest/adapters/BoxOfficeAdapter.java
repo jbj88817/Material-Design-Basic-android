@@ -33,7 +33,7 @@ public class BoxOfficeAdapter extends RecyclerView.Adapter<BoxOfficeAdapter.BoxO
     private ImageLoader mImageLoader;
     private Context mContext;
     private DateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private int previousPosition = 0;
+    private int mPreviousPosition = 0;
 
     public BoxOfficeAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
@@ -76,11 +76,19 @@ public class BoxOfficeAdapter extends RecyclerView.Adapter<BoxOfficeAdapter.BoxO
             holder.movieAudienceScore.setAlpha(1.0F);
         }
 
-        if (position > previousPosition){
-            AnimationUtils.animate(holder, true);
+        // Animation
+        if (position > mPreviousPosition) {
+            AnimationUtils.animateSunblind(holder, true);
+//            AnimationUtils.animateSunblind(holder, true);
+//            AnimationUtils.animate1(holder, true);
+//            AnimationUtils.animate(holder,true);
         } else {
-            AnimationUtils.animate(holder, false);
+            AnimationUtils.animateSunblind(holder, false);
+//            AnimationUtils.animateSunblind(holder, false);
+//            AnimationUtils.animate1(holder, false);
+//            AnimationUtils.animate(holder, false);
         }
+        mPreviousPosition = position;
 
 
 
