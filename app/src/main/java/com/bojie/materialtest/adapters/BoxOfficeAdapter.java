@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.bojie.materialtest.R;
+import com.bojie.materialtest.anim.AnimationUtils;
 import com.bojie.materialtest.extras.Constants;
 import com.bojie.materialtest.network.VolleySingleton;
 import com.bojie.materialtest.pojo.Movie;
@@ -32,6 +33,7 @@ public class BoxOfficeAdapter extends RecyclerView.Adapter<BoxOfficeAdapter.BoxO
     private ImageLoader mImageLoader;
     private Context mContext;
     private DateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private int previousPosition = 0;
 
     public BoxOfficeAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
@@ -74,7 +76,14 @@ public class BoxOfficeAdapter extends RecyclerView.Adapter<BoxOfficeAdapter.BoxO
             holder.movieAudienceScore.setAlpha(1.0F);
         }
 
-        //
+        if (position > previousPosition){
+            AnimationUtils.animate(holder, true);
+        } else {
+            AnimationUtils.animate(holder, false);
+        }
+
+
+
         String urlThumbnail = currentMovie.getUrlThumbnail();
 
         loadImages(urlThumbnail, holder);
