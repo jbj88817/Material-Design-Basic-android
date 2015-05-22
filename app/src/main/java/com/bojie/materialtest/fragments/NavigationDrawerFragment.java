@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bojie.materialtest.activities.MainActivity;
 import com.bojie.materialtest.pojo.Information;
 import com.bojie.materialtest.R;
 import com.bojie.materialtest.adapters.RecycleAdapter;
@@ -75,7 +77,8 @@ public class NavigationDrawerFragment extends Fragment {
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), mRecyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int postion) {
-                Toast.makeText(getActivity(), "onClick " + postion, Toast.LENGTH_SHORT).show();
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                ((MainActivity) getActivity()).onDrawerItemClicked(postion - 1);
             }
 
             @Override
@@ -86,15 +89,16 @@ public class NavigationDrawerFragment extends Fragment {
         return layout;
     }
 
-    public static List<Information> getData() {
+    public List<Information> getData() {
+        //load only static data inside a drawer
         List<Information> data = new ArrayList<>();
-        int[] icons = {R.drawable.ic_number1, R.drawable.ic_number2, R.drawable.ic_number3, R.drawable.ic_number4};
-        String[] titles = {"Bojie", "Ziyang", "Kyle", "Larry"};
-        for (int i = 0; i < titles.length && i < icons.length; i++) {
-            Information current = new Information();
-            current.iconId = icons[i % icons.length];
-            current.title = titles[i % titles.length];
-            data.add(current);
+        int[] icons = {R.drawable.ic_action_search_orange, R.drawable.ic_action_trending_orange, R.drawable.ic_action_upcoming_orange};
+        String[] titles = getResources().getStringArray(R.array.drawer_tabs);
+        for (int i = 0; i < titles.length; i++) {
+            Information information = new Information();
+            information.title = titles[i];
+            information.iconId = icons[i];
+            data.add(information);
         }
         return data;
     }

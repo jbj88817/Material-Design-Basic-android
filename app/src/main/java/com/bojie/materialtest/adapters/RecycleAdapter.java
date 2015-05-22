@@ -17,11 +17,13 @@ import java.util.List;
 /**
  * Created by bojiejiang on 4/25/15.
  */
-public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHolder> {
+public class RecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private LayoutInflater inflater;
     List<Information> data = Collections.emptyList();
     private Context mContext;
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_ITEM = 1;
 
     public RecycleAdapter(Context context, List<Information> data) {
         inflater = LayoutInflater.from(context);
@@ -30,44 +32,65 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = inflater.inflate(R.layout.custom_row, viewGroup, false);
-        MyViewHolder holder = new MyViewHolder(view);
-        return holder;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        if (viewType == TYPE_HEADER) {
+
+            View view = inflater.inflate(R.layout.drawer_header, viewGroup, false);
+            HeaderHolder holder = new HeaderHolder(view);
+            return holder;
+
+        } else {
+            View view = inflater.inflate(R.layout.item_drawer, viewGroup, false);
+            ItemHolder holder = new ItemHolder(view);
+            return holder;
+        }
+
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder myViewHolder, int i) {
-        Information current = data.get(i);
-        myViewHolder.tv_title.setText(current.title);
-        myViewHolder.iv_icon.setImageResource(current.iconId);
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return TYPE_HEADER;
+        } else {
+            return TYPE_ITEM;
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder myViewHolder, int position) {
+
+        if (myViewHolder instanceof HeaderHolder) {
+
+        } else {
+            ItemHolder itemHolder = (ItemHolder) myViewHolder;
+            Information current = data.get(position - 1);
+            itemHolder.tv_title.setText(current.title);
+            itemHolder.iv_icon.setImageResource(current.iconId);
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data.size() + 1;
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ItemHolder extends RecyclerView.ViewHolder {
         ImageView iv_icon;
         TextView tv_title;
 
-        public MyViewHolder(View itemView) {
+        public ItemHolder(View itemView) {
             super(itemView);
             tv_title = (TextView) itemView.findViewById(R.id.listText);
             iv_icon = (ImageView) itemView.findViewById(R.id.listIcon);
-            itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
+    }
 
+    class HeaderHolder extends RecyclerView.ViewHolder {
+
+        public HeaderHolder(View itemView) {
+            super(itemView);
         }
     }
-
-    public void delete(int postion) {
-        data.remove(postion);
-        notifyItemRemoved(postion);
-    }
-
 }

@@ -194,6 +194,10 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         return super.onOptionsItemSelected(item);
     }
 
+    public void onDrawerItemClicked(int index) {
+        mViewPager.setCurrentItem(index);
+    }
+
     @Override
     public void onTabSelected(MaterialTab materialTab) {
         mViewPager.setCurrentItem(materialTab.getPosition());
@@ -231,7 +235,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     class MyPagerAdapter extends FragmentPagerAdapter {
 
         //String[] tabText = getResources().getStringArray(R.array.tabs);
-        int icons[] = {R.drawable.ic_action_home, R.drawable.ic_action_articles, R.drawable.ic_action_personal};
+        int icons[] = {R.drawable.ic_action_search_orange, R.drawable.ic_action_trending_orange, R.drawable.ic_action_upcoming_orange};
         //int icons[] = {R.drawable.vector_android, R.drawable.vector_android, R.drawable.vector_android};
 
         public MyPagerAdapter(FragmentManager fm) {
