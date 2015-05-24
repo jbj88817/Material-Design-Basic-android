@@ -3,7 +3,6 @@ package com.bojie.materialtest.activities;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.transition.Fade;
 import android.transition.TransitionManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -67,19 +66,17 @@ public class ActivityA extends ActionBarActivity implements View.OnClickListener
     @SuppressLint("NewApi")
     @Override
     public void onClick(View v) {
-        Fade fade = new Fade();
-        fade.setDuration(3000);
-        TransitionManager.beginDelayedTransition(mRoot, fade);
-        toggleVisibility(mButton1, mButton2, mButton3, mButton4);
+        TransitionManager.beginDelayedTransition(mRoot);
+        toggleHeight(mButton1, mButton2, mButton3, mButton4);
     }
 
-    public void toggleVisibility(View... views) {
+    public void toggleHeight(View... views) {
         for (View current : views) {
-            if (current.getVisibility() == View.VISIBLE) {
-                current.setVisibility(View.INVISIBLE);
-            }
+            ViewGroup.LayoutParams params = current.getLayoutParams();
+            params.height = 100;
+            params.width = 50;
+            current.setLayoutParams(params);
         }
     }
-
-
 }
+
