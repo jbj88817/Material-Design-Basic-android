@@ -190,6 +190,9 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         if (id == R.id.action_recycler_animators_activity) {
             startActivity(new Intent(this, RecyclerAnimatorsActivity.class));
         }
+        if (id == R.id.action_calling) {
+            startActivity(new Intent(this, ActivityA.class));
+        }
 
         return super.onOptionsItemSelected(item);
     }

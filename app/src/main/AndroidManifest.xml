@@ -55,6 +55,12 @@
             android:name=".activities.RecyclerAnimatorsActivity"
             android:label="@string/title_activity_recycler_animators" >
         </activity>
+        <activity android:name=".activities.ActivityA"
+                  android:label="Calling">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

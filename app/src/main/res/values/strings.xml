@@ -48,5 +48,6 @@
     <string name="action_shared_transitions">SharedElementsTransition</string>
     <string name="title_activity_recycler_animators">RecyclerAnimatorsActivity</string>
     <string name="action_recycler_animators">Recycler Animators</string>
+    <string name="action_calling">CallingActivity</string>
 
 </resources>
