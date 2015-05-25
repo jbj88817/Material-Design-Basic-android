@@ -50,5 +50,6 @@
     <string name="action_recycler_animators">Recycler Animators</string>
     <string name="action_calling">CallingActivity</string>
     <string name="title_activity_activity_b">ActivityB</string>
+    <string name="action_shared">SharedButtonActivity</string>
 
 </resources>

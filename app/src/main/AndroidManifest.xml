@@ -70,6 +70,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bojie.materialtest.activities.ActivityA" />
         </activity>
+        <activity
+            android:name=".activities.ActivitySharedA"
+            android:label="@string/title_activity_activity_shared"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bojie.materialtest.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activities.ActivitySharedB"
+            android:label="@string/title_activity_activity_shared_b"
+            android:parentActivityName=".activities.ActivitySharedA" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ActivitySharedA" />
+        </activity>
     </application>
 
 </manifest>

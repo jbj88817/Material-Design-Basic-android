@@ -29,6 +29,11 @@
         android:orderInCategory="104"
         android:title="@string/action_calling"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_shared"
+        android:orderInCategory="105"
+        android:title="@string/action_shared"
+        app:showAsAction="never"/>
 </menu>
 
 

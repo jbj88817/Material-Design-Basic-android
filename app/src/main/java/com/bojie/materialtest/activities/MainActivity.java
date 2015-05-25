@@ -193,6 +193,9 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         if (id == R.id.action_calling) {
             startActivity(new Intent(this, ActivityA.class));
         }
+        if (id == R.id.action_shared) {
+            startActivity(new Intent(this, ActivitySharedA.class));
+        }
 
         return super.onOptionsItemSelected(item);
     }
