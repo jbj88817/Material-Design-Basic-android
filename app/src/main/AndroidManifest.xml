@@ -55,11 +55,20 @@
             android:name=".activities.RecyclerAnimatorsActivity"
             android:label="@string/title_activity_recycler_animators" >
         </activity>
-        <activity android:name=".activities.ActivityA"
-                  android:label="Calling">
+        <activity
+            android:name=".activities.ActivityA"
+            android:label="Calling" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activities.ActivityB"
+            android:label="@string/title_activity_activity_b"
+            android:parentActivityName=".activities.ActivityA" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bojie.materialtest.activities.ActivityA" />
         </activity>
     </application>
 
