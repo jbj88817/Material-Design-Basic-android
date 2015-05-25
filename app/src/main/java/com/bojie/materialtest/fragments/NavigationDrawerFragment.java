@@ -137,22 +137,22 @@ public class NavigationDrawerFragment extends Fragment {
 
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                if (slideOffset < 0.6) {
-                    toolbar.setAlpha(1 - slideOffset);
-                }
-
+                super.onDrawerSlide(drawerView, slideOffset);
+                ((MainActivity) getActivity()).onDrawerSlide(slideOffset);
+                    toolbar.setAlpha(1 - slideOffset / 2);
             }
         };
 
-        if (!mUserLearnedDrawer && !mFromSavedInstancestate) {
-            mDrawerLayout.openDrawer(containerView);
-        }
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerLayout.post(new Runnable() {
             @Override
             public void run() {
                 mDrawerToggle.syncState();
+                if (!mUserLearnedDrawer && !mFromSavedInstancestate) {
+                    mDrawerLayout.openDrawer(containerView);
+                }
+
             }
         });
     }

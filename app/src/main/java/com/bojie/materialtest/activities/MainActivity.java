@@ -51,6 +51,8 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     private static final String TAG_SORT_NAME = "sortName";
     private static final String TAG_SORT_DATE = "sortDate";
     private static final String TAG_SORT_RATINGS = "sortRatings";
+    private FloatingActionButton mFAB;
+    private FloatingActionMenu mFABMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +126,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         ImageView icon = new ImageView(this); // Create an icon
         icon.setImageResource(R.drawable.ic_action_new);
 
-        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
+        mFAB = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
                 .setBackgroundDrawable(R.drawable.selector_button_red)
                 .build();
@@ -152,11 +154,11 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         buttonSortName.setOnClickListener(this);
         buttonSortRatings.setOnClickListener(this);
 
-        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
+        mFABMenu = new FloatingActionMenu.Builder(this)
                 .addSubActionView(buttonSortName)
                 .addSubActionView(buttonSortDate)
                 .addSubActionView(buttonSortRatings)
-                .attachTo(actionButton)
+                .attachTo(mFAB)
                 .build();
     }
 
@@ -277,6 +279,19 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         private Drawable getIcon(int position) {
             return getResources().getDrawable(icons[position]);
+        }
+    }
+
+    public void onDrawerSlide(float sideOffset) {
+        toggleTranslateFAB(sideOffset);
+    }
+
+    private void toggleTranslateFAB(float slideOffset) {
+        if (mFABMenu != null) {
+            if (mFABMenu.isOpen()) {
+                mFABMenu.close(true);
+            }
+            mFAB.setTranslationX(slideOffset * 300);
         }
     }
 }
