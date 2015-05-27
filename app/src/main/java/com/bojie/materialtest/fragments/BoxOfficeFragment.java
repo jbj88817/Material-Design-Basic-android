@@ -21,8 +21,9 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.bojie.materialtest.R;
-import com.bojie.materialtest.adapters.BoxOfficeAdapter;
+import com.bojie.materialtest.adapters.MovieAdapter;
 import com.bojie.materialtest.callbacks.BoxOfficeMoviesLoaderListener;
+import com.bojie.materialtest.database.MoviesDatabase;
 import com.bojie.materialtest.extras.MovieSorter;
 import com.bojie.materialtest.extras.SortListener;
 import com.bojie.materialtest.logging.L;
@@ -58,7 +59,7 @@ public class BoxOfficeFragment extends Fragment implements SortListener,
     private ArrayList<Movie> mMoviesList = new ArrayList<>();
     private DateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private RecyclerView mListMovieHits;
-    private BoxOfficeAdapter mBoxOfficeAdapter;
+    private MovieAdapter mBoxOfficeAdapter;
     private TextView mVolleyError;
     private MovieSorter mMovieSorter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -136,21 +137,21 @@ public class BoxOfficeFragment extends Fragment implements SortListener,
         mVolleyError = (TextView) view.findViewById(R.id.tv_VolleyError);
         mListMovieHits = (RecyclerView) view.findViewById(R.id.listMovieHits);
         mListMovieHits.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mBoxOfficeAdapter = new BoxOfficeAdapter(getActivity());
+        mBoxOfficeAdapter = new MovieAdapter(getActivity());
         mListMovieHits.setAdapter(mBoxOfficeAdapter);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeMovieHits);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        
 
         if (savedInstanceState != null) {
             mMoviesList = savedInstanceState.getParcelableArrayList(STATE_MOVIES);
         } else {
-            mMoviesList = MyApplication.getWritableDatabase().getAllMoviesBoxOffice();
+            mMoviesList = MyApplication.getWritableDatabase().readMovies(MoviesDatabase.BOX_OFFICE);
             if (mMoviesList.isEmpty()) {
                 L.t(getActivity(), "executing task from fragment");
                 new TaskLoadMoviesBoxOffice(this).execute();
             }
         }
-        mBoxOfficeAdapter.setMovieArrayList(mMoviesList);
+        mBoxOfficeAdapter.setMovies(mMoviesList);
         return view;
     }
 
@@ -180,7 +181,7 @@ public class BoxOfficeFragment extends Fragment implements SortListener,
         if (mSwipeRefreshLayout.isRefreshing()){
             mSwipeRefreshLayout.setRefreshing(false);
         }
-        mBoxOfficeAdapter.setMovieArrayList(movieArrayList);
+        mBoxOfficeAdapter.setMovies(movieArrayList);
     }
 
     @Override

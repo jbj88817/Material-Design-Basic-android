@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +35,7 @@ import me.tatarka.support.job.JobInfo;
 import me.tatarka.support.job.JobScheduler;
 
 
-public class MainActivity extends ActionBarActivity implements MaterialTabListener,
+public class MainActivity extends AppCompatActivity implements MaterialTabListener,
         View.OnClickListener {
 
     private static final int JOB_ID = 100;
@@ -47,7 +47,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     private static final int MOVIES_SEARCH_RESULTS = 0;
     private static final int MOVIES_HITS = 1;
     private static final int MOVIES_UPCOMING = 2;
-    private static final long POLL_FREQUENCY = 600000;
+    private static final long POLL_FREQUENCY = 3600000;
     private static final String TAG_SORT_NAME = "sortName";
     private static final String TAG_SORT_DATE = "sortDate";
     private static final String TAG_SORT_RATINGS = "sortRatings";

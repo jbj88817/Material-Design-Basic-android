@@ -8,12 +8,21 @@ import static com.bojie.materialtest.extras.UriEndpoints.*;
  */
 public class Endpoints {
 
-    public static String getRequestUrl(int limit) {
+    public static String getBoxOfficeRequestUrl(int limit) {
 
         return URL_BOX_OFFICE
                 + URL_CHAR_QUESTION
                 + URL_PARAM_API_KEY + MyApplication.API_KEY_ROTTEN_TOMATOES
                 + URL_CHAR_AMEPERSAND
                 + URL_PARAM_LIMIT + limit;
+    }
+
+    public static String getUpcomingRequestUrl(int limit) {
+
+        return URL_UPCOMING
+                + URL_CHAR_QUESTION
+                + URL_PARAM_API_KEY + MyApplication.API_KEY_ROTTEN_TOMATOES
+                + URL_CHAR_AMEPERSAND
+                + URL_PARAM_UPCOMING_LIMIT + limit;
     }
 }

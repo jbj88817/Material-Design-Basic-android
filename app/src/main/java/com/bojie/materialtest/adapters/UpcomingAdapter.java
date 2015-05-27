@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by bojiejiang on 5/10/15.
+ * Created by bojiejiang on 5/25/15.
  */
-public class BoxOfficeAdapter extends RecyclerView.Adapter<BoxOfficeAdapter.BoxOfficeViewHolder> {
+public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder> {
 
     private LayoutInflater mLayoutInflater;
     private ArrayList<Movie> mMovieArrayList = new ArrayList<>();
@@ -35,7 +35,7 @@ public class BoxOfficeAdapter extends RecyclerView.Adapter<BoxOfficeAdapter.BoxO
     private DateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private int mPreviousPosition = 0;
 
-    public BoxOfficeAdapter(Context context) {
+    public UpcomingAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
         mVolleySingleton = VolleySingleton.getInstance();
         mImageLoader = mVolleySingleton.getImageLoader();
@@ -48,14 +48,14 @@ public class BoxOfficeAdapter extends RecyclerView.Adapter<BoxOfficeAdapter.BoxO
     }
 
     @Override
-    public BoxOfficeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public UpcomingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mLayoutInflater.inflate(R.layout.custom_movie_box_office, parent, false);
-        BoxOfficeViewHolder viewHolder = new BoxOfficeViewHolder(view);
+        UpcomingViewHolder viewHolder = new UpcomingViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final BoxOfficeViewHolder holder, int position) {
+    public void onBindViewHolder(final UpcomingViewHolder holder, int position) {
         Movie currentMovie = mMovieArrayList.get(position);
         holder.movieTitle.setText(currentMovie.getTitle());
 
@@ -97,7 +97,7 @@ public class BoxOfficeAdapter extends RecyclerView.Adapter<BoxOfficeAdapter.BoxO
         loadImages(urlThumbnail, holder);
     }
 
-    private void loadImages(String urlThumbnail, final BoxOfficeViewHolder holder) {
+    private void loadImages(String urlThumbnail, final UpcomingViewHolder holder) {
         if (!urlThumbnail.equals(Constants.NA)) {
             mImageLoader.get(urlThumbnail, new ImageLoader.ImageListener() {
                 @Override
@@ -118,14 +118,14 @@ public class BoxOfficeAdapter extends RecyclerView.Adapter<BoxOfficeAdapter.BoxO
         return mMovieArrayList.size();
     }
 
-    static class BoxOfficeViewHolder extends RecyclerView.ViewHolder {
+    static class UpcomingViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView movieThumbnail;
         private TextView movieTitle;
         private TextView movieReleaseDate;
         private RatingBar movieAudienceScore;
 
-        public BoxOfficeViewHolder(View itemView) {
+        public UpcomingViewHolder(View itemView) {
             super(itemView);
             movieThumbnail = (ImageView) itemView.findViewById(R.id.movieThumbnail);
             movieTitle = (TextView) itemView.findViewById(R.id.movieTitle);
@@ -134,3 +134,5 @@ public class BoxOfficeAdapter extends RecyclerView.Adapter<BoxOfficeAdapter.BoxO
         }
     }
 }
+
+
